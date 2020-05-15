@@ -27,3 +27,8 @@ process.on('SIGINT', () => {
   console.log('Shutting down...')
   responder.close()
 })
+
+process.on('uncaughtException', (error) => {
+  console.log(`Error: ${error.message}`)
+  responder.close()
+})
