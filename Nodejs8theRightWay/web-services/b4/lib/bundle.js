@@ -15,6 +15,19 @@ module.exports = (app, es) => {
       .catch(({ error }) => res.status(error.status || 502).json(error))
   })
 
+  app.delete('/api/bundle/:id',async (req, res) => {
+    const options = {
+      url: `${url}/${req.params.id}`,
+      json: true,
+    }
+    try {
+      const esResBody = await rp.delete(options)
+      res.status(200).json(esResBody)
+    } catch (esResErr) {
+      res.status(esResErr.statusCode || 502).json(esResErr.error)
+    }
+  })
+
   app.get('/api/bundle/:id', async (req, res) => {
     const options = {
       url: `${url}/${req.params.id}`,
